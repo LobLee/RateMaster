@@ -4,22 +4,14 @@ include("../connection.php");
 include("file_sidebar.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST['id'], $_POST['rating'])) {
-        $file_id = $_POST['id'];
-        $rating = $_POST['rating'];
+    if(isset($_POST['item_id'], $_POST['rating'])) {
+        $item_id = mysqli_real_escape_string($connForEjie, $_POST['item_id']);
+        $rating = mysqli_real_escape_string($connForEjie, $_POST['rating']);
 
-        // Retrieve existing total rating and total rating count from database
-        $select_query = "SELECT total_rating, rating_count FROM file_list WHERE id = $file_id";
-        $select_result = mysqli_query($connForEjie, $select_query);
-
-        if ($select_result && mysqli_num_rows($select_result) > 0) {
-            $row = mysqli_fetch_assoc($select_result);
-            $total_rating = $row['total_rating'] + $rating;
-            $rating_count = $row['rating_count'] + 1;
-
-            // Update total rating and rating count in the database
-            $update_query = "UPDATE file_list SET total_rating = $total_rating, rating_count = $rating_count WHERE id = $file_id";
-            $update_result = mysqli_query($connForEjie, $update_query);
+    
+        $insertIntoRating = "INSERT INTO file_ratings (item_id,rate) VALUES ($item_id,$rating)";
+        mysqli_query($connForEjie,$insertIntoRating);
+            
 
             if ($update_result) {
                 $txt = "A user rated a file in the File Resources Management System!";
@@ -35,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error retrieving file details.";
         }
     } 
-}
 ?>
 
 <!DOCTYPE html>
@@ -92,16 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if(mysqli_num_rows($query) > 0) {
             $file_details = mysqli_fetch_assoc($query);
-            $total_rating = $file_details['total_rating'];
-            $rating_count = $file_details['rating_count'];
+           
     ?>
             <img src="file/file.jpg<?php echo $file_details['file']; ?>" style="width: 400px; height: 400px; margin-left: 400px; margin-top:10px;">
             <h4 style="margin-left: 400px; color: white;">Title: <?php echo $file_details['title'] ?></h4>
             <h4 style="margin-left: 400px; color: white;">Price: $<?php echo $file_details['price'] ?></h4>
             <h4 style="margin-left: 400px; color: white;">Description: <?php echo $file_details['description'] ?></h4>
-
-            <!-- Display average rating -->
-            <h4 style="margin-left: 400px; color: white;">Average Rating: <?php echo ($rating_count > 0) ? number_format($total_rating / $rating_count, 1) : 'N/A'; ?></h4>
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" style="margin-left: 400px;">
                 <div class="rating">

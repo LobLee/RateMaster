@@ -8,13 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $item_id = mysqli_real_escape_string($connForEjie, $_POST['item_id']);
         $rating = mysqli_real_escape_string($connForEjie, $_POST['rating']);
 
-        
-
-       
-
-        // Update the item's rating in the items table
-        // $update_query = "UPDATE items SET rate = '$rating' WHERE id = '$item_id'";
-        // $update_result = mysqli_query($connForEjie, $update_query);
+    
         $insertIntoRating = "INSERT INTO irate_ratings (item_id,rate) VALUES ($item_id,$rating)";
         mysqli_query($connForEjie,$insertIntoRating);
 

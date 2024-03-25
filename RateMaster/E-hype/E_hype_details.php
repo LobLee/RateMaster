@@ -4,13 +4,13 @@ include("../connection.php");
 include("E_hype_sidebar.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST['E_HYpe_Id']) && isset($_POST['rating'])) {
-        $E_HYpe_Id = $_POST['E_HYpe_Id'];
-        $rating = $_POST['rating'];
+    if(isset($_POST['item_id'], $_POST['rating'])) {
+        $item_id = mysqli_real_escape_string($connForEjie, $_POST['item_id']);
+        $rating = mysqli_real_escape_string($connForEjie, $_POST['rating']);
 
-        // Update the item's rating in the items table
-        $update_query = "UPDATE product SET rate = '$rating' WHERE id = $E_HYpe_Id";
-        $update_result = mysqli_query($connForEjie, $update_query);
+    
+        $insertIntoRating = "INSERT INTO e_hype_ratings (item_id,rate) VALUES ($item_id,$rating)";
+        mysqli_query($connForEjie,$insertIntoRating);
 
         $txt = "A user rated an item in the E Hype Beast Shop Management System!";
 
