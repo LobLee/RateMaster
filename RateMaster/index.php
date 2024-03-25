@@ -161,6 +161,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <button type="submit">Login</button>
         </form>
         <p>Didn't have account? Click here! <a href="#" id="register-link">Register</a></p>
+        <p>Forgot your password? <a href="forgot_password.php">Reset it here</a></p>
+
     </div>
 
     <div class="register-container" style="display:none;">
