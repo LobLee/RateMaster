@@ -55,16 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <input type="hidden" name="action" value="reset_password">
             <div class="input-group">
                 <label for="username">Enter your username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" placeHolder = "Username" required>
             </div>
             <div class="input-group">
                 <label for="new_password">New Password:</label>
-                <input type="password" id="new_password" name="new_password" required>
+                <input type="password" id="new_password" name="new_password" placeHolder = "New Password" required>
                 <span class="eye-icon" onclick="togglePasswordVisibility('new_password')">👁️</span>
             </div>
             <div class="input-group">
                 <label for="confirm_password">Confirm Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
+                <input type="password" id="confirm_password" name="confirm_password" placeHolder = "Confirm Password" required>
                 <span class="eye-icon" onclick="togglePasswordVisibility('confirm_password')">👁️</span>
             </div>
             <button type="submit">Reset</button>

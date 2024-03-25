@@ -135,11 +135,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <input type="hidden" name="action" value="login">
             <div class="input-group">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" placeHolder = "Username" required>
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeHolder = "Password" required>
                 <input type="checkbox" id="show-password" onclick="togglePasswordVisibility()"> Show Password
             </div>
             <div class="input-group">
@@ -183,11 +183,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <input type="hidden" name="action" value="register">
             <div class="input-group">
                 <label for="reg_username">Username:</label>
-                <input type="text" id="reg_username" name="username" required>
+                <input type="text" id="reg_username" name="username" placeHolder = "Username" required>
             </div>
             <div class="input-group">
                 <label for="reg_password">Password:</label>
-                <input type="password" id="reg_password" name="password" required>
+                <input type="password" id="reg_password" name="password" placeHolder = "Password" required>
                 <input type="checkbox" id="show-reg-password" onclick="toggleRegPasswordVisibility()"> Show Password
             </div>
             <div class="input-group">

@@ -31,7 +31,7 @@
 }
 
 .title h1{
-    font-size: 20px;
+    font-size: 50px;
     display: flex;
     justify-content: center;
     margin-left: 70px;
@@ -52,7 +52,7 @@
 }
 
 .title,.dis{
-    color: rgb(73, 73, 73);
+    color: rgb(92, 8, 249);
 }
 
 .box:hover{
