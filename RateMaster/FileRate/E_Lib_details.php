@@ -1,8 +1,10 @@
 <?php
+session_start();
 ob_start(); // Start output buffering
 include("../connection.php");
 include("file_sidebar.php");
 
+$user = $_SESSION['Data'];
 // Initialize $book_id variable
 $book_id = "";
 
@@ -16,13 +18,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_result = mysqli_query($connForEjie, $update_query);
 
         if ($update_result) {
-            header('Location: E_Library.php?item_id=' . $book_id);
-            exit(); // Exit to avoid executing further code
+            // Redirect to a confirmation page
+            header('Location: library_confirm.php');
+            exit; // Stop further execution after redirection
         } else {
+            // Handle database insertion error
             echo "Error updating rating: " . mysqli_error($connForEjie);
         }
-    } 
-}
+    } else {
+        // Handle missing POST data
+        echo "Error: Missing file details.";
+    }
+} 
 
 // Fetch book details if $book_id is set
 $book_details = array();

@@ -1,32 +1,38 @@
 <?php
+session_start();
 ob_start(); // Start output buffering
 include("../connection.php");
 include("file_sidebar.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST['item_id'], $_POST['rating'])) {
-        $item_id = mysqli_real_escape_string($connForEjie, $_POST['item_id']);
+    if(isset($_POST['id'], $_POST['rating'])) {
+        $item_id = mysqli_real_escape_string($connForEjie, $_POST['id']);
         $rating = mysqli_real_escape_string($connForEjie, $_POST['rating']);
 
-    
-        $insertIntoRating = "INSERT INTO file_ratings (item_id,rate) VALUES ($item_id,$rating)";
-        mysqli_query($connForEjie,$insertIntoRating);
+        $user = $_SESSION['Data'];
+        // Insert rating into the database
+        $insertIntoRating = "INSERT INTO file_ratings (item_id, rate, user) VALUES ('$item_id', '$rating', '$user')";
+        $insertResult = mysqli_query($connForEjie, $insertIntoRating);
+        
+       
+            // Log the rating activity
+            $txt = "A user rated a file in the File Resources Management System!";
+            $insertLog = "INSERT INTO log (type, message) VALUES ('filerate', '$txt')";
+            mysqli_query($conn, $insertLog);
             
-
-            if ($update_result) {
-                $txt = "A user rated a file in the File Resources Management System!";
-                $insertLog = "INSERT INTO log (type,message) VALUES ('filerate','$txt')";
-                mysqli_query($conn, $insertLog);
-
-                header('Location: FileRating.php');
-                exit; // Stop further execution after redirection
-            } else {
-                echo "Error updating rating: " . mysqli_error($connForEjie);
-            }
+            if ($insertResult) {
+            // Redirect to a confirmation page
+            header('Location: rating_confirm.php');
+            exit; // Stop further execution after redirection
         } else {
-            echo "Error retrieving file details.";
+            // Handle database insertion error
+            echo "Error updating rating: " . mysqli_error($connForEjie);
         }
-    } 
+    } else {
+        // Handle missing POST data
+        echo "Error: Missing file details.";
+    }
+} 
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $file_details = mysqli_fetch_assoc($query);
            
     ?>
-            <img src="file/file.jpg<?php echo $file_details['file']; ?>" style="width: 400px; height: 400px; margin-left: 400px; margin-top:10px;">
+            <img src="../file/file.jpg<?php echo $file_details['file']; ?>" style="width: 400px; height: 400px; margin-left: 400px; margin-top:10px;">
             <h4 style="margin-left: 400px; color: white;">Title: <?php echo $file_details['title'] ?></h4>
             <h4 style="margin-left: 400px; color: white;">Price: $<?php echo $file_details['price'] ?></h4>
             <h4 style="margin-left: 400px; color: white;">Description: <?php echo $file_details['description'] ?></h4>

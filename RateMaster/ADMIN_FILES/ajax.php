@@ -306,7 +306,7 @@ if(isset($_POST['displayTableForManageInIrate']) && $_POST['displayTableForManag
             <tbody>';
 
             
-            $sql = "SELECT * FROM items";
+            $sql = "SELECT items.*, irate_ratings.rate FROM items LEFT JOIN irate_ratings ON items.id = irate_ratings.item_id  ORDER BY irate_ratings.id DESC";
 
             $result = mysqli_query($connForEjie,$sql);
             $number = 1;
@@ -373,7 +373,7 @@ if(isset($_POST['displayTableForManageInFrate']) && $_POST['displayTableForManag
             <tbody>';
 
             
-            $sql = "SELECT * FROM file_list";
+            $sql = "SELECT file_list.*, file_ratings.rate FROM file_list LEFT JOIN file_ratings ON file_ratings.id = file_ratings.item_id  ORDER BY file_ratings.id DESC";
 
             $result = mysqli_query($connForEjie,$sql);
             $number = 1;
@@ -445,8 +445,7 @@ if(isset($_POST['displayTableForManageInBuild']) && $_POST['displayTableForManag
             </thead>
             <tbody>';
 
-            
-            $sql = "SELECT * FROM propertylist";
+            $sql = "SELECT propertylist.*, property_rating.rate FROM propertylist LEFT JOIN property_rating ON propertylist.id = property_rating.property_id  ORDER BY property_rating.id DESC";
 
             $result = mysqli_query($connForEjie,$sql);
             $number = 1;
@@ -517,8 +516,7 @@ if(isset($_POST['displayTableForManageInHype']) && $_POST['displayTableForManage
             </thead>
             <tbody>';
 
-            
-            $sql = "SELECT * FROM product";
+            $sql = "SELECT product.*, e_hype_ratings.rate FROM product LEFT JOIN e_hype_ratings ON product.id = e_hype_ratings.item_id  ORDER BY e_hype_ratings.id DESC";
 
             $result = mysqli_query($connForEjie,$sql);
             $number = 1;
@@ -590,7 +588,7 @@ if(isset($_POST['displayTableForActivityLogIrate']) && $_POST['displayTableForAc
             <tbody>';
 
             
-            $sql = "SELECT * FROM `log` WHERE type = 'irate'";
+            $sql = "SELECT * FROM `log` WHERE type = 'irate' ORDER BY id DESC";
 
             $result = mysqli_query($conn,$sql);
             $number = 1;
@@ -645,7 +643,7 @@ if(isset($_POST['displayTableForActivityLogFrate']) && $_POST['displayTableForAc
             <tbody>';
 
             
-            $sql = "SELECT * FROM `log` WHERE type = 'file_rate'";
+            $sql = "SELECT * FROM `log` WHERE type = 'filerate' ORDER BY id DESC";
 
             $result = mysqli_query($conn,$sql);
             $number = 1;
@@ -702,7 +700,7 @@ if(isset($_POST['displayTableForActivityLogHype']) && $_POST['displayTableForAct
             <tbody>';
 
             
-            $sql = "SELECT * FROM `log` WHERE type = 'hype'";
+            $sql = "SELECT * FROM `log` WHERE type = 'hypebeast' ORDER BY id DESC";
 
             $result = mysqli_query($conn,$sql);
             $number = 1;
@@ -758,7 +756,7 @@ if(isset($_POST['displayTableForActivityLogBuild']) && $_POST['displayTableForAc
             <tbody>';
 
             
-            $sql = "SELECT * FROM `log` WHERE type = 'build'";
+            $sql = "SELECT * FROM `log` WHERE type = 'build' ORDER BY id DESC";
 
             $result = mysqli_query($conn,$sql);
             $number = 1;

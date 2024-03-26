@@ -14,17 +14,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $txt = "A user rated an item in the E Hype Beast Shop Management System!";
 
-        $insertLog = "INSERT INTO log (type,message) VALUES ('hype','$txt')";
+        $insertLog = "INSERT INTO log (type,message) VALUES ('hypebeast','$txt')";
         mysqli_query($conn,$insertLog);
 
-        if ($update_result) {
-            header('Location: E_hypeRate.php');
+        if ($insertIntoRating) {
+            // Redirect to a confirmation page
+            header('Location: rating_confirm.php');
             exit; // Stop further execution after redirection
         } else {
+            // Handle database insertion error
             echo "Error updating rating: " . mysqli_error($connForEjie);
         }
-    } 
-}
+    } else {
+        // Handle missing POST data
+        echo "Error: Missing file details.";
+    }
+} 
 ?>
 
 <!DOCTYPE html>

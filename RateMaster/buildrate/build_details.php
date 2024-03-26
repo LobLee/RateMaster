@@ -1,4 +1,5 @@
 <?php
+session_start();
 ob_start(); // Start output buffering
 include("../connection.php");
 include("build_sidebar.php");
@@ -8,8 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $building_id = $_POST['building_id'];
         $rating = $_POST['rating'];
 
+        $user = $_SESSION['Data'];
+
         // Update the item's rating in the items table
-        $insertIntoRating = "INSERT INTO property_rating (property_id,rate) VALUES ($building_id,$rating)";
+        $insertIntoRating = "INSERT INTO property_rating (property_id,rate) VALUES ('$building_id', '$rating', '$user')";
         mysqli_query($connForEjie,$insertIntoRating);
 
         $txt = "A user rated an item in the Real Estate and Resources Management Platform!";
@@ -18,13 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_query($conn,$insertLog);
 
         if ($insertIntoRating) {
-            header('Location: buildRate.php');
+            // Redirect to a confirmation page
+            header('Location: rating_confirm.php');
             exit; // Stop further execution after redirection
         } else {
+            // Handle database insertion error
             echo "Error updating rating: " . mysqli_error($connForEjie);
         }
-    } 
-}
+    } else {
+        // Handle missing POST data
+        echo "Error: Missing file details.";
+    }
+} 
 
 ?>
 
